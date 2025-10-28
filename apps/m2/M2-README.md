@@ -18,6 +18,6 @@ This document lists all BeautifulSoup API functions and classes used in Mileston
 1. python task2.py input_file.html
 2. python task3.py input_file.html
 3. python task4.py input_file.html
-4. python task6.py input_file.html
+4. python task6.py
 5. python test1_soupreplacer.py
 6. python task2_soupreplacer.py
