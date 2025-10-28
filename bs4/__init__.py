@@ -92,6 +92,7 @@ from .filter import (
     ElementFilter,
     SoupStrainer,
 )
+from .soupreplacer import SoupReplacer
 from typing import (
     Any,
     cast,
@@ -215,6 +216,7 @@ class BeautifulSoup(Tag):
         from_encoding: Optional[_Encoding] = None,
         exclude_encodings: Optional[_Encodings] = None,
         element_classes: Optional[Dict[Type[PageElement], Type[PageElement]]] = None,
+        replacer: Optional[SoupReplacer] = None,
         **kwargs: Any,
     ):
         """Constructor.
@@ -435,6 +437,7 @@ class BeautifulSoup(Tag):
         self.known_xml = self.is_xml
         self._namespaces = dict()
         self.parse_only = parse_only
+        self.replacer = replacer
 
         if hasattr(markup, "read"):  # It's a file-type object.
             markup = markup.read()
@@ -1017,6 +1020,10 @@ class BeautifulSoup(Tag):
         """
         # print("Start tag %s: %s" % (name, attrs))
         self.endData()
+        
+        if self.replacer and name == self.replacer.og_tag:
+            name = self.replacer.alt_tag
+
 
         if (
             self.parse_only
