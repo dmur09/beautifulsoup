@@ -1020,10 +1020,6 @@ class BeautifulSoup(Tag):
         """
         # print("Start tag %s: %s" % (name, attrs))
         self.endData()
-        
-        if self.replacer and name == self.replacer.og_tag:
-            name = self.replacer.alt_tag
-
 
         if (
             self.parse_only
@@ -1050,11 +1046,35 @@ class BeautifulSoup(Tag):
             namespaces=namespaces,
         )
         if tag is None:
-            return tag
+            return tag        
+        
         if self._most_recent_element is not None:
             self._most_recent_element.next_element = tag
+        
         self._most_recent_element = tag
+        
         self.pushTag(tag)
+        
+        if self.replacer:
+            # milestone 2 implementation of soup replacer
+            if getattr(self.replacer, "og_tag", None) and getattr(self.replacer, "alt_tag", None):
+                if tag.name == self.replacer.og_tag:
+                    tag.name = self.replacer.alt_tag
+            
+            # milestone 3 
+            if getattr(self.replacer, "name_xformer", None):
+                new_name = self.replacer.name_xformer(tag)
+                if new_name and new_name != tag.name:
+                    tag.name = new_name
+            
+            if getattr(self.replacer, "attrs_xformer", None):
+                new_attrs = self.replacer.attrs_xformer(tag)
+                if new_attrs is not None:
+                    tag.attrs = new_attrs
+                    
+            if getattr(self.replacer, "xformer", None):
+                self.replacer.xformer(tag)
+        
         return tag
 
     def handle_endtag(self, name: str, nsprefix: Optional[str] = None) -> None:
