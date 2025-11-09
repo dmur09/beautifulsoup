@@ -20,13 +20,10 @@ Milestone 3 extends the `SoupReplacer` API to support **powerful functional tran
 
 The `SoupReplacer` API in **Milestone 2** provided a simple mechanism to replace specific tag names (`og_tag` → `alt_tag`) during parsing. While this works for straightforward substitutions, it is **limited**:
 
-- Cannot modify attributes or perform complex transformations.  
-- Cannot apply conditional logic from other based on other attributes.
+- Cannot modify attributes or perform complex transformations.
 - Transformations are limited to one-to-one tag replacements.
 
----
-
-**Milestone 3** introduces a **functional transformation API**:
+**Milestone 3** API on the other hand adds some key features:
 
 - `name_xformer(tag)` – dynamically modifies tag names.  
 - `attrs_xformer(tag)` – dynamically modifies attributes.  
@@ -35,7 +32,6 @@ The `SoupReplacer` API in **Milestone 2** provided a simple mechanism to replace
 This allows much more flexible and detailed control over tag transformation during parsing. Key improvements:
 
 - Multiple transformations can occur in one pass: rename tags, modify attributes, and apply arbitrary logic.  
-- Transformations occur as tags are created, **preserving tree structure and text content**.  
 - The original Milestone 2 string replacement still works, so existing use cases are preserved.
 
 Thus, for a potential BeautifulSoup extension, I would recommend adopting the **Milestone 3 API design**. This design balances **simplicity for basic use cases** with **power and flexibility for advanced transformations**, making it a strong candidate for inclusion in a future BeautifulSoup release.

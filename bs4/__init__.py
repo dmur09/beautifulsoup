@@ -1061,17 +1061,19 @@ class BeautifulSoup(Tag):
                 if tag.name == self.replacer.og_tag:
                     tag.name = self.replacer.alt_tag
             
-            # milestone 3 
+            # milestone 3 tag name replacement
             if getattr(self.replacer, "name_xformer", None):
                 new_name = self.replacer.name_xformer(tag)
                 if new_name and new_name != tag.name:
                     tag.name = new_name
             
+            # milestone 3 change tag attributes
             if getattr(self.replacer, "attrs_xformer", None):
                 new_attrs = self.replacer.attrs_xformer(tag)
                 if new_attrs is not None:
                     tag.attrs = new_attrs
                     
+            # apply xformer for any extra side effects
             if getattr(self.replacer, "xformer", None):
                 self.replacer.xformer(tag)
         
