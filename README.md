@@ -1,0 +1,1 @@
+This project is a quarter-long deep dive into API design, parsing systems, and contributing to a large existing codebase. Starting from the original BeautifulSoup 4 source, I extended the library with new programmer-facing APIs, new parsing behaviors, and improved traversal mechanisms while maintaining compatibility with the existing architecture.
