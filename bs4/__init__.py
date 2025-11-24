@@ -92,6 +92,7 @@ from .filter import (
     ElementFilter,
     SoupStrainer,
 )
+# import soupreplacer into beautiful soup
 from .soupreplacer import SoupReplacer
 from typing import (
     Any,
