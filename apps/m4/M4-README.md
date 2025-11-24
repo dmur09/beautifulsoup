@@ -1,18 +1,21 @@
 # Milestone-4
 
 **Overview**  
-Iterable BeautifulSoup is a version of BeautifulSoup that lets you go through HTML or XML documents one piece at a time, making it easier to work with large files.
+Iterable BeautifulSoup extends BeautifulSoup by adding a **DFS-based iterator** to tags. This allows looping over all elements and text in depth-first order using a standard Python `for` loop.
 
-**Key Features**  
-- Go through tags, text, and attributes using a loop  
-- Works with large documents without using too much memory  
-- Can be used with Python generators or async code  
-- Compatible with normal BeautifulSoup objects
+**Key Idea**  
+- `__iter__` yields the node itself and recursively all children via `_dfs_traversal`  
+- Handles nested and mixed content automatically  
+- Integrated into the module, so imported tags are iterable out of the box
 
-**Example**  
+**Example Usage**
 ```python
-from bs4 import IterableSoup
+from bs4 import BeautifulSoup  # your module imports element.py
 
-for node in IterableSoup(html_doc):
-    if node.name == "a":
-        print(node.get("href"))
+html = "<div>Hello <b>Bold</b> World</div>"
+soup = BeautifulSoup(html, "html.parser")
+
+# Iterate all elements and text (DFS order)
+for node in soup.div:
+    print(node.name if node.name else str(node))
+# Output: div, Hello , b, Bold,  World

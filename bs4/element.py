@@ -2212,6 +2212,7 @@ class Tag(PageElement):
     # new __iter__ method to apply dfs traversal
     def __iter__(self):
         yield from self._dfs_traversal(self)
+        
     # dfs traversal for iteration in soup
     def _dfs_traversal(self, node):
         yield node
