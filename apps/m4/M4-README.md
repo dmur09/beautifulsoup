@@ -1,8 +1,6 @@
-## Milestone-4
+## Milestone-4 - Technical Brief
 
-## Technical Brief
-
-We made `BeautifulSoup` iterable by adding a DFS-based `__iter__` method to the `Tag` class in `element.py`. This allows users to write:
+We made `BeautifulSoup` iterable by adding a DFS-based `__iter__` method to the `Tag` class in `element.py`. Iteration over the soup traverses the HTML tree top-down, left-to-right, yielding one node at a time:
 
 ```python
 for node in soup:
@@ -13,14 +11,14 @@ for node in soup:
 
 Implemented __iter__ and a recursive _dfs generator inside Tag.
 
-DFS yields each node one at a time—no list building, satisfying the milestone requirement.
+DFS yields each node individually—no list is built, satisfying the milestone requirement.
 
-Because BeautifulSoup inherits from Tag, the whole soup becomes iterable automatically.
+Iterating over BeautifulSoup delegates to the root tag, so the whole document is traversed automatically.
 
 # Why This Design
 
 Efficient: generator-based traversal uses minimal memory.
 
-Simple: works for all tags and the root soup object.
+Simple: works for all tags, nested structures, and mixed content.
 
 Matches natural HTML structure traversal (top-down, left-to-right).

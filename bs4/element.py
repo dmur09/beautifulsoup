@@ -2205,13 +2205,13 @@ class Tag(PageElement):
         and throws an exception if it's not there."""
         return self.attrs[key]
 
+    # modify __iter__ to do a depth-first traversal
     def __iter__(self) -> Iterator[PageElement]:
         "Iterating over a Tag iterates over its contents."
-        return iter(self.contents)
-    
-    def depth_first(self):
+        # return iter(self.contents)
         yield from self._dfs(self)
 
+    # depth-first traversal generator
     def _dfs(self, node):
         yield node
         for child in getattr(node, "contents", []):
