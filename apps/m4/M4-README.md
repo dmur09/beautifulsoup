@@ -1,21 +1,26 @@
-# Milestone-4
+## Milestone-4
 
-**Overview**  
-Iterable BeautifulSoup extends BeautifulSoup by adding a **DFS-based iterator** to tags. This allows looping over all elements and text in depth-first order using a standard Python `for` loop.
+## Technical Brief
 
-**Key Idea**  
-- `__iter__` yields the node itself and recursively all children via `_dfs_traversal`  
-- Handles nested and mixed content automatically  
-- Integrated into the module, so imported tags are iterable out of the box
+We made `BeautifulSoup` iterable by adding a DFS-based `__iter__` method to the `Tag` class in `element.py`. This allows users to write:
 
-**Example Usage**
 ```python
-from bs4 import BeautifulSoup  # your module imports element.py
+for node in soup:
+    print(node)
+```
 
-html = "<div>Hello <b>Bold</b> World</div>"
-soup = BeautifulSoup(html, "html.parser")
+# Design Summary
 
-# Iterate all elements and text (DFS order)
-for node in soup.div:
-    print(node.name if node.name else str(node))
-# Output: div, Hello , b, Bold,  World
+Implemented __iter__ and a recursive _dfs generator inside Tag.
+
+DFS yields each node one at a time—no list building, satisfying the milestone requirement.
+
+Because BeautifulSoup inherits from Tag, the whole soup becomes iterable automatically.
+
+# Why This Design
+
+Efficient: generator-based traversal uses minimal memory.
+
+Simple: works for all tags and the root soup object.
+
+Matches natural HTML structure traversal (top-down, left-to-right).

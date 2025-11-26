@@ -2205,19 +2205,17 @@ class Tag(PageElement):
         and throws an exception if it's not there."""
         return self.attrs[key]
 
-    # def __iter__(self) -> Iterator[PageElement]:
-    #     "Iterating over a Tag iterates over its contents."
-    #     return iter(self.contents)
+    def __iter__(self) -> Iterator[PageElement]:
+        "Iterating over a Tag iterates over its contents."
+        return iter(self.contents)
     
-    # new __iter__ method to apply dfs traversal
-    def __iter__(self):
-        yield from self._dfs_traversal(self)
-        
-    # dfs traversal for iteration in soup
-    def _dfs_traversal(self, node):
+    def depth_first(self):
+        yield from self._dfs(self)
+
+    def _dfs(self, node):
         yield node
-        for child in getattr(node, 'contents', []):
-            yield from self._dfs_traversal(child)
+        for child in getattr(node, "contents", []):
+            yield from self._dfs(child)
 
     def __len__(self) -> int:
         "The length of a Tag is the length of its list of contents."
